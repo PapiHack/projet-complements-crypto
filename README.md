@@ -6,9 +6,9 @@ Ce dépôt contient le code source du projet du module de compléments cryptogra
 
 Le projet est constitué des composants suivants:
 
-- [SamaBank App : Application mobile](https://github.com/PapiHack)
-- [Bank API : Backend en Spring Boot](https://github.com/PapiHack)
-- [SMS Sender Service : Service d'envoi de SMS](https://github.com/PapiHack)
+- [SamaBank App : Application mobile](https://github.com/PapiHack/projet-complements-crypto/tree/master/sama_bank)
+- [Bank API : Backend en Spring Boot](https://github.com/PapiHack/projet-complements-crypto/tree/master/bank-api)
+- [SMS Sender Service : Service d'envoi de SMS](https://github.com/PapiHack/projet-complements-crypto/tree/master/sms-api)
 
 ## Stack Technlogique
 

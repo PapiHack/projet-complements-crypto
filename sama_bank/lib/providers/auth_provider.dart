@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/models.dart';
+// import '../../models/models.dart';
 import '../services/services.dart';
 import '../controllers/controllers.dart';
 
@@ -25,7 +25,7 @@ class AuthNotifier extends StateNotifier<bool> {
     return await authService.getCodeOTP(loginController);
   }
 
-  Future<CodeOTP?> decrypt(DecoderController decoderController) async {
+  Future<String?> decrypt(DecoderController decoderController) async {
     return await authService.decrypt(decoderController);
   }
 }

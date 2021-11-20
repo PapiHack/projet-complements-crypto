@@ -7,23 +7,26 @@ import '../../../utils/utils.dart';
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, watch, _) {
-      return Scaffold(
-        appBar: AppBar(
-          title: customRedHatText(
-            'Connexion',
-            COLOR_WHITE,
-            15.0,
-            FontWeight.w700,
+    return Consumer(
+      builder: (context, watch, _) {
+        return Scaffold(
+          appBar: AppBar(
+            title: customRedHatText(
+              'Connexion',
+              COLOR_WHITE,
+              15.0,
+              FontWeight.w700,
+            ),
           ),
-        ),
-        body: Container(
-          color: COLOR_WHITE,
-          child: SingleChildScrollView(
-            child: SignInView(),
+          body: Container(
+            height: 900,
+            color: COLOR_WHITE,
+            child: SingleChildScrollView(
+              child: SignInView(),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

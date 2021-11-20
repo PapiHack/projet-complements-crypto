@@ -36,7 +36,7 @@ class AuthService {
     }
   }
 
-  Future<CodeOTP?> decrypt(DecoderController decoderController) async {
+  Future<String?> decrypt(DecoderController decoderController) async {
     try {
       var response = await this.httpClient.post(
         '/decrypt-code',
@@ -44,7 +44,7 @@ class AuthService {
           'codeOTP': decoderController.codeToDecrypt.text,
         },
       );
-      return CodeOTP.fromJSON(response);
+      return response;
     } catch (error) {
       return null;
     }

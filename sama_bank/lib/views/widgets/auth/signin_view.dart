@@ -156,11 +156,10 @@ class _SignInViewState extends State<SignInView> {
                   COLOR_GREEN,
                   16,
                   FontWeight.w500,
-                  () => {}
-                  // () => Application.router.navigateTo(
-                  //   context,
-                  //   Routes.LOGIN,
-                  // ),
+                  () => Application.router.navigateTo(
+                    context,
+                    Routes.LOGIN,
+                  ),
                 ),
                 addVerticalSpace(15),
               ],

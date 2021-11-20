@@ -2,15 +2,79 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../../../utils/utils.dart';
 import '../../../controllers/controllers.dart';
 import '../../../config/config.dart';
+import '../../../providers/providers.dart';
 
-class DecoderView extends StatelessWidget {
+class DecoderView extends StatefulWidget {
+  @override
+  _DecoderViewState createState() => _DecoderViewState();
+}
+
+class _DecoderViewState extends State<DecoderView> {
   final _formKey = GlobalKey<FormState>();
+
   final _decoderController = DecoderController();
+
   final _decodedOTPCodeController = TextEditingController();
+
+  void _onSubmit() {
+    Loader.show(
+      context,
+      progressIndicator: CircularProgressIndicator(
+        color: COLOR_GREEN,
+      ),
+    );
+    if (this._formKey.currentState!.validate()) {
+      context
+          .read(authProvider.notifier)
+          .decrypt(this._decoderController)
+          .then(
+        (value) {
+          Loader.hide();
+          if (value != null) {
+            this._decodedOTPCodeController.text = value;
+            Scaffold.of(context).showSnackBar(
+              UIHelpers.getSnackbar(
+                message: 'Décodage effectué avec succés ! Veuillez utiliser ce code pour vous connecter !',
+                backgroundColor: COLOR_GREEN,
+                textColor: Colors.white,
+                label: 'OK',
+                action: () => {},
+              ),
+            );
+          } else {
+            Scaffold.of(context).showSnackBar(
+              UIHelpers.getSnackbar(
+                message: 'Code OTP invalide !',
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                label: 'OK',
+                action: () => {},
+              ),
+            );
+          }
+        },
+      ).onError(
+        (error, stackTrace) {
+          Loader.hide();
+          Scaffold.of(context).showSnackBar(
+            UIHelpers.getSnackbar(
+              message:
+                  'Oups 😕... Une erreur est survenue lors du décodage, veuillez recommencer svp !',
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              label: 'OK',
+              action: () => {},
+            ),
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +95,6 @@ class DecoderView extends StatelessWidget {
                     validator: (value) {
                       if (isNull(value) || value == '') {
                         return 'Le code OTP à décrypter est obligatoire';
-                      }
-                      if (!isNumeric(value!)) {
-                        return 'Veuillez spécifier un code OTP à décoder valide svp !';
                       }
                     },
                     textAlign: TextAlign.justify,
@@ -121,7 +182,7 @@ class DecoderView extends StatelessWidget {
                       'Décoder',
                       18,
                       FontWeight.w500,
-                      () => {},
+                      () => this._onSubmit(),
                     ),
                   ),
                 ),

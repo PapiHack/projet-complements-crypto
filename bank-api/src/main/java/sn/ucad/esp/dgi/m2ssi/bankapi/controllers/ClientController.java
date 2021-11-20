@@ -2,6 +2,7 @@ package sn.ucad.esp.dgi.m2ssi.bankapi.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import sn.ucad.esp.dgi.m2ssi.bankapi.dto.LoginDTO;
@@ -49,7 +50,7 @@ public class ClientController {
 
     @PostMapping("/login")
     @ApiOperation(value = "Permet d'authentifier un user")
-    public void login(@RequestBody LoginDTO userInfos) {
+    public void login(@RequestBody LoginDTO userInfos) throws NotFoundException {
         this.clientService.login(userInfos);
     }
 

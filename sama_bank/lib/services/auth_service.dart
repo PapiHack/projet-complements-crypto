@@ -52,14 +52,15 @@ class AuthService {
 
   Future<bool> login(AuthController authController) async {
     try {
-      await this.httpClient.post(
+      var response = await this.httpClient.post(
         '/login',
         data: {
           'pin': authController.pinCode.text,
           'codeOTP': authController.codeOTP.text,
         },
       );
-      return true;
+      print('response = $response');
+      return response == null ? false : true;
     } catch (error) {
       return false;
     }

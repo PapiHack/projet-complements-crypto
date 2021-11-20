@@ -1,5 +1,6 @@
 package sn.ucad.esp.dgi.m2ssi.bankapi.services;
 
+import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ucad.esp.dgi.m2ssi.bankapi.dto.LoginDTO;
@@ -48,21 +49,24 @@ public class ClientService {
         return user;
     }
 
-    public Optional<Client> findByPhoneNumberAndPin(String codeOTP, String pin) {
+    public Optional<Client> findByPhoneNumberAndPin(String codeOTP, String pin) throws NotFoundException {
         Optional<Client> user = Optional.empty();
         Optional<CodeOTP> code = this.codeOTPService.findByCode(codeOTP);
         if (code.isPresent()) {
-            if (code.get().getClient().getPin().equalsIgnoreCase(pin)) {
+            if (code.get().getClient().getPin().equalsIgnoreCase(pin) && !code.get().isUsed()) {
                 user = Optional.of(code.get().getClient());
                 CodeOTP entity = code.get();
                 entity.setUsed(true);
                 this.codeOTPService.save(entity);
             }
         }
+        if (!user.isPresent()) {
+            throw new NotFoundException("Code PIN ou OTP non valide !");
+        }
         return user;
     }
 
-    public Optional<Client> login(LoginDTO userInfos) {
+    public Optional<Client> login(LoginDTO userInfos) throws NotFoundException {
         return this.findByPhoneNumberAndPin(userInfos.getCodeOTP(), userInfos.getPin());
     }
 

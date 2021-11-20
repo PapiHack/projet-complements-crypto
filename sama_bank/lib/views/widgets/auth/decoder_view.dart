@@ -29,17 +29,15 @@ class _DecoderViewState extends State<DecoderView> {
       ),
     );
     if (this._formKey.currentState!.validate()) {
-      context
-          .read(authProvider.notifier)
-          .decrypt(this._decoderController)
-          .then(
+      context.read(authProvider.notifier).decrypt(this._decoderController).then(
         (value) {
           Loader.hide();
           if (value != null) {
             this._decodedOTPCodeController.text = value;
             Scaffold.of(context).showSnackBar(
               UIHelpers.getSnackbar(
-                message: 'Décodage effectué avec succés ! Veuillez utiliser ce code pour vous connecter !',
+                message:
+                    'Décodage effectué avec succés ! Veuillez utiliser ce code pour vous connecter !',
                 backgroundColor: COLOR_GREEN,
                 textColor: Colors.white,
                 label: 'OK',

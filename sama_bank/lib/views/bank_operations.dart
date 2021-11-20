@@ -11,6 +11,7 @@ class BankOperationsPage extends StatelessWidget {
       builder: (context, watch, _) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: customRedHatText(
               'Opérations Bancaires Disponibles',
               COLOR_WHITE,
@@ -22,7 +23,7 @@ class BankOperationsPage extends StatelessWidget {
             color: COLOR_WHITE,
             child: Container(
               padding: EdgeInsets.all(20),
-              child: Text('Bienvenue sur l\'applicatio sama bank !'),
+              child: Text('Bienvenue sur l\'application sama bank !'),
             ),
           ),
         );

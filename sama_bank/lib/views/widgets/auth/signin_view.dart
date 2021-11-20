@@ -18,6 +18,54 @@ class _SignInViewState extends State<SignInView> {
   final _formKey = GlobalKey<FormState>();
   final _authController = AuthController();
 
+  void _onSubmit() {
+    if (this._formKey.currentState!.validate()) {
+      Loader.show(
+        context,
+        progressIndicator: CircularProgressIndicator(
+          color: COLOR_GREEN,
+        ),
+      );
+      context.read(authProvider.notifier).login(this._authController).then(
+        (value) {
+          Loader.hide();
+          if (value) {
+            Application.router.navigateTo(context, Routes.HOME);
+            // Navigator.pushNamedAndRemoveUntil(
+            //   context,
+            //   Routes.HOME,
+            //   (r) => false,
+            // );
+          } else {
+            Scaffold.of(context).showSnackBar(
+              UIHelpers.getSnackbar(
+                message: 'Code PIN ou OTP invalide !',
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                label: 'OK',
+                action: () => {},
+              ),
+            );
+          }
+        },
+      ).onError(
+        (error, stackTrace) {
+          Loader.hide();
+          Scaffold.of(context).showSnackBar(
+            UIHelpers.getSnackbar(
+              message:
+                  'Oups 😕... Une erreur est survenue, veuillez recommencer svp !',
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              label: 'OK',
+              action: () => {},
+            ),
+          );
+        },
+      );
+    }
+  }
+
   @override
   void dispose() {
     Loader.hide();
@@ -146,7 +194,7 @@ class _SignInViewState extends State<SignInView> {
                       'Se connecter',
                       18,
                       FontWeight.w500,
-                      () => {},
+                      () => this._onSubmit(),
                     ),
                   ),
                 ),

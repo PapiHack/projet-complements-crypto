@@ -24,13 +24,13 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void _onSubmit() {
-    Loader.show(
-      context,
-      progressIndicator: CircularProgressIndicator(
-        color: COLOR_GREEN,
-      ),
-    );
     if (this._formKey.currentState!.validate()) {
+      Loader.show(
+        context,
+        progressIndicator: CircularProgressIndicator(
+          color: COLOR_GREEN,
+        ),
+      );
       context
           .read(authProvider.notifier)
           .getCodeOTP(this._loginController)
@@ -40,7 +40,8 @@ class _LoginViewState extends State<LoginView> {
           if (value) {
             Scaffold.of(context).showSnackBar(
               UIHelpers.getSnackbar(
-                message: 'Vous allez recevoir votre code, décodez le dans la section OTP décodeur !',
+                message:
+                    'Vous allez recevoir votre code, décodez le dans la section OTP décodeur !',
                 backgroundColor: COLOR_GREEN,
                 textColor: Colors.white,
                 label: 'OK',
@@ -58,7 +59,8 @@ class _LoginViewState extends State<LoginView> {
           } else {
             Scaffold.of(context).showSnackBar(
               UIHelpers.getSnackbar(
-                message: 'Numéro de Telephone invalide ou n\'est pas enregistré !',
+                message:
+                    'Numéro de Telephone invalide ou n\'est pas enregistré !',
                 backgroundColor: Colors.red,
                 textColor: Colors.white,
                 label: 'OK',

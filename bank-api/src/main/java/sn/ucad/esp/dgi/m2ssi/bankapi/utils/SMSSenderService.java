@@ -33,7 +33,6 @@ public class SMSSenderService {
         data.put("phone_number", phoneNumber);
         data.put("message", message);
 
-        // TODO : send SMS to phoneNumber here
         this.httpService.post(endpoint, data, headers);
     }
 }

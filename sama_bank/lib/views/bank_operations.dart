@@ -21,9 +21,36 @@ class BankOperationsPage extends StatelessWidget {
           ),
           body: Container(
             color: COLOR_WHITE,
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Text('Bienvenue sur l\'application sama bank !'),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: customRedHatText(
+                      'Bienvenue sur l\'application sama bank !',
+                      Colors.black,
+                      18,
+                      FontWeight.bold,
+                    ),
+                  ),
+                  BankOperation(
+                    imgUrl: 'assets/images/payment-method.png',
+                    operationTitle: 'Paiement',
+                  ),
+                  BankOperation(
+                    imgUrl: 'assets/images/money-transfer.png',
+                    operationTitle: 'Transfert d\'argent',
+                  ),
+                  BankOperation(
+                    imgUrl: 'assets/images/atm-machine.png',
+                    operationTitle: 'Retrait d\'argent',
+                  ),
+                  BankOperation(
+                    imgUrl: 'assets/images/money-transaction.png',
+                    operationTitle: 'Transaction',
+                  ),
+                ],
+              ),
             ),
           ),
         );

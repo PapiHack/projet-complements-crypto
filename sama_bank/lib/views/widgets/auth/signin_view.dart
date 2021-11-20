@@ -30,12 +30,11 @@ class _SignInViewState extends State<SignInView> {
         (value) {
           Loader.hide();
           if (value) {
-            Application.router.navigateTo(context, Routes.HOME);
-            // Navigator.pushNamedAndRemoveUntil(
-            //   context,
-            //   Routes.HOME,
-            //   (r) => false,
-            // );
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.HOME,
+              (r) => false,
+            );
           } else {
             Scaffold.of(context).showSnackBar(
               UIHelpers.getSnackbar(

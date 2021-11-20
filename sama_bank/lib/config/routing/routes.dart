@@ -8,6 +8,7 @@ class Routes {
   static const String LOGIN = '/login';
   static const String REGISTER = '/register';
   static const String HOME = '/home';
+  static const String SIGN_IN = '/sign-in';
 
   static FluroRouter? getRouter() {
     if (_instance == null) {
@@ -21,6 +22,7 @@ class Routes {
     router.define(LOGIN, handler: loginHandler, transitionType: TransitionType.fadeIn);
     router.define(REGISTER, handler: registerHandler, transitionType: TransitionType.inFromRight);
     router.define(HOME, handler: bankOperationsHandler, transitionType: TransitionType.inFromRight);
+    router.define(SIGN_IN, handler: signInHandler, transitionType: TransitionType.nativeModal);
     return router;
   }
 }

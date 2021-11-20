@@ -31,7 +31,7 @@ public class CodeOTPController {
 
     @PostMapping("/decrypt-code")
     @ApiOperation(value = "Génére un code OTP pour un utilisateur")
-    public String decryptCode(@RequestBody DecryptDTO codeOTP) {
+    public String decryptCode(@RequestBody DecryptDTO codeOTP) throws NotFoundException {
         return this.codeOTPService.decryptOTPCode(codeOTP);
     }
 

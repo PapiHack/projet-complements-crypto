@@ -30,13 +30,10 @@ class DecoderView extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (isNull(value) || value == '') {
-                        return 'Le code PIN est obligatoire';
+                        return 'Le code OTP à décrypter est obligatoire';
                       }
                       if (!isNumeric(value!)) {
-                        return 'Veuillez spécifier un code PIN valide svp !';
-                      }
-                      if (value.length != 4) {
-                        return 'Le code PIN doit être composé de 4 chiffres';
+                        return 'Veuillez spécifier un code OTP à décoder valide svp !';
                       }
                     },
                     textAlign: TextAlign.justify,
@@ -128,6 +125,17 @@ class DecoderView extends StatelessWidget {
                     ),
                   ),
                 ),
+                addVerticalSpace(10),
+                customOutlinedButton(
+                  'Se connecter',
+                  COLOR_GREEN,
+                  16,
+                  FontWeight.w500,
+                  () => Application.router.navigateTo(
+                    context,
+                    Routes.SIGN_IN,
+                  ),
+                ),
                 addVerticalSpace(5),
                 customOutlinedButton(
                   'S\'inscrire',
@@ -139,7 +147,7 @@ class DecoderView extends StatelessWidget {
                     Routes.REGISTER,
                   ),
                 ),
-                addVerticalSpace(15),
+                addVerticalSpace(10),
               ],
             ),
           ),

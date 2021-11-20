@@ -19,6 +19,9 @@ public class CodeOTP extends InheritColumns implements Serializable {
     @Column(name="encoded_code")
     private byte[] encodedCode;
 
+    @Column(name="stringify_code")
+    private String stringifyCode;
+
     @ManyToOne
     private Client client;
 
@@ -52,5 +55,13 @@ public class CodeOTP extends InheritColumns implements Serializable {
 
     public void setEncodedCode(byte[] encodedCode) {
         this.encodedCode = encodedCode;
+    }
+
+    public String getStringifyCode() {
+        return stringifyCode;
+    }
+
+    public void setStringifyCode(String stringifyCode) {
+        this.stringifyCode = stringifyCode;
     }
 }

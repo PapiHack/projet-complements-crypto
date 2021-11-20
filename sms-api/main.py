@@ -49,9 +49,9 @@ async def send_sms(sms_infos: SMS):
     if response.status_code == 201:
         return {
             'status': 'success',
-            'message': 'SMS successfully sent !'
+            'message': 'SMS successfully sent !',
         }
     return {
         'status': 'error',
-        'message': response.json()
+        'message': response.json(),
     }

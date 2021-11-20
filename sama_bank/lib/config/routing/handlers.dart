@@ -13,6 +13,11 @@ Handler registerHandler = Handler(
       RegisterPage(),
 );
 
+Handler signInHandler = Handler(
+  handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
+      SignInPage(),
+);
+
 Handler bankOperationsHandler = Handler(
   handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
       BankOperationsPage(),

@@ -21,17 +21,12 @@ public class HttpService {
 
     public void post(String url, Map<String, Object> data, HttpHeaders headers) {
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(data, headers);
-        System.out.println("===================== " + httpEntity.getBody());
-        ResponseEntity<String> response = this.restTemplate.exchange(
+        ResponseEntity<SMSSenderResponse> response = this.restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 httpEntity,
-                new ParameterizedTypeReference<String>() {}
+                new ParameterizedTypeReference<SMSSenderResponse>() {}
         );
-        if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("==================== OK ====================");
-        } else {
-            System.out.println("==================== NOOOOOOOOOOOOO ====================");
-        }
+        // return response.getBody();
     }
 }

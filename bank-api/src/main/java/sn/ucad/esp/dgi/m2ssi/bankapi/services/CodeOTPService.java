@@ -1,7 +1,6 @@
 package sn.ucad.esp.dgi.m2ssi.bankapi.services;
 
 import javassist.NotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ucad.esp.dgi.m2ssi.bankapi.dto.DecryptDTO;
@@ -18,7 +17,6 @@ import javax.crypto.NoSuchPaddingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -80,31 +78,33 @@ public class CodeOTPService {
         return false;
     }
 
+    public boolean isCodeAlreadyExist(String code) {
+        for(CodeOTP codeOTP : this.codeOTPRepository.findAll()) {
+            if (codeOTP.getCode().equalsIgnoreCase(code)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public CodeOTP generateOTPCode(String phoneNumber) throws NotFoundException {
         CodeOTP codeOTP = new CodeOTP();
-        // this.smsSenderService.sendSMS(phoneNumber, "TESTING");
         Optional<Client> user = this.findUserByPhoneNumber(phoneNumber);
         if(!user.isPresent()) {
             throw new NotFoundException("L'utilisateur avec ce numéro de téléphone n'existe pas !");
         }
         String generatedCode = this.generateRandomOTPCode();
-        if (this.findByCodeAndUsed(generatedCode, true)) {
+        if (this.isCodeAlreadyExist(generatedCode)) {
             generatedCode = this.generateRandomOTPCode();
         }
         codeOTP.setCode(generatedCode);
         codeOTP.setClient(user.get());
-        // TODO: Encrypt codeOTP and send it to the user by SMS
         try {
             byte[] encodedCode = this.cryptographyService.encryptMessage(generatedCode);
+            String strCode = new String(encodedCode).getBytes(StandardCharsets.UTF_8).toString();
             codeOTP.setEncodedCode(encodedCode);
-            String encryptedCode = new String(this.cryptographyService.encryptMessage(generatedCode));
-            System.out.println("============================== GENERATED CODE = " + generatedCode);
-            System.out.println("============================== ENCRYPTED GENERATED CODE = " + encryptedCode.getBytes(StandardCharsets.UTF_8).toString());
-            // System.out.println("============================== DECRYPTED GENERATED CODE = " + this.cryptographyService.decryptMessage(this.cryptographyService.encryptMessage(generatedCode)));
-            System.out.println("============================== DECRYPTED GENERATED CODE = " + this.cryptographyService.decryptMessage(codeOTP.getEncodedCode()));
-            boolean res = (new String(codeOTP.getEncodedCode())).equals(encryptedCode);
-            System.out.println("============================== EGALITE = " + res);
-            // this.smsSenderService.sendSMS(phoneNumber, encryptedCode);
+            codeOTP.setStringifyCode(strCode);
+            this.smsSenderService.sendSMS(phoneNumber, strCode);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
@@ -117,14 +117,23 @@ public class CodeOTPService {
             e.printStackTrace();
         }
         return this.codeOTPRepository.save(codeOTP);
-        // return codeOTP;
     }
 
-    public String decryptOTPCode(DecryptDTO OTPCodeInfos) {
-        // TODO: Use crypto service in order to decrypt the token and send it
+    public String decryptOTPCode(DecryptDTO OTPCodeInfos) throws NotFoundException {
+        List<CodeOTP> allOTPCodes = this.codeOTPRepository.findAll();
+        CodeOTP otp = null;
+        for (CodeOTP codeOTP: allOTPCodes) {
+            if (codeOTP.getStringifyCode().equals(OTPCodeInfos.getCodeOTP())) {
+                otp = codeOTP;
+                break;
+            }
+        }
+        if (otp == null) {
+            throw new NotFoundException("Code OTP invalide !");
+        }
         String decryptedCode = new String();
         try {
-            decryptedCode = this.cryptographyService.decryptMessage(OTPCodeInfos.getCodeOTP());
+            decryptedCode = this.cryptographyService.decryptMessage(otp.getEncodedCode());
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {

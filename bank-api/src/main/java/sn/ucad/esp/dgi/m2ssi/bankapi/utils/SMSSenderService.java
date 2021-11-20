@@ -14,21 +14,8 @@ import java.util.Map;
 @Transactional
 public class SMSSenderService {
 
-    @Value("${orange.application-id}")
-    private String applicationId;
-
-    @Value("${orange.client-id}")
-    private String clientId;
-
-    @Value("${orange.client-secret}")
-    private String clientSecret;
-
-    @Value("${orange.token}")
-    private String token;
-
-    private static final String ORANGE_API_URL = "https://api.orange.com";
-
-    private static final String DEV_PHONE_NUMBER = "2210000";
+    @Value("${sms-api-root-url}")
+    private String smsSenderAPIRootUrl;
 
     private HttpService httpService;
 
@@ -37,22 +24,14 @@ public class SMSSenderService {
     }
 
     public void sendSMS(String phoneNumber, String message) {
-        String endpoint = ORANGE_API_URL + "/smsmessaging/v1/outbound/tel:+" + DEV_PHONE_NUMBER + "/requests";
+        String endpoint = this.smsSenderAPIRootUrl + "/v1/send-sms";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(this.token);
-
-        Map<String, String> outboundSMSTextMessage = new HashMap<>();
-        outboundSMSTextMessage.put("message", message);
-
-        Map<String, Object> outboundSMSMessageRequest = new HashMap<>();
-        outboundSMSMessageRequest.put("address", "tel:+" + phoneNumber);
-        outboundSMSMessageRequest.put("senderAddress", "tel:+" + DEV_PHONE_NUMBER);
-        outboundSMSMessageRequest.put("outboundSMSTextMessage", outboundSMSTextMessage);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("outboundSMSMessageRequest", outboundSMSMessageRequest);
+        data.put("phone_number", phoneNumber);
+        data.put("message", message);
 
         // TODO : send SMS to phoneNumber here
         this.httpService.post(endpoint, data, headers);

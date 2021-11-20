@@ -10,6 +10,10 @@ Le projet est constitué des composants suivants:
 - [Bank API : Backend en Spring Boot](https://github.com/PapiHack/projet-complements-crypto/tree/master/bank-api)
 - [SMS Sender Service : Service d'envoi de SMS](https://github.com/PapiHack/projet-complements-crypto/tree/master/sms-api)
 
+Le but de ce projet est d'appliquer les systèmes cryptographiques afin garantir la confidentialité et l’authenticité d’une transaction bancaire, mais aussi se familiariser avec des systèmes d’authentification multi-couches.
+Afin de mener à bien cet objectif, nous avons conçu un client mobile où l'utilisateur pourra accéder à un ensemble d'opérations bancaires après s'être préalablement authentifier. Elle se fera en plusieurs étapes comprenant une vérification via `OTP` chiffré avec `AES` en combinaison avec un code `PIN`.
+Un service nommé `CryptographyService` situé au niveau du `BankAPI` implémente un ensemble de méthodes facilitant les opérations cryptographiques (chiffrement, déchiffrement, génération de clé et création d'un `Cypher`, etc.).
+
 ## Stack Technlogique
 
 - `Dart & Flutter`

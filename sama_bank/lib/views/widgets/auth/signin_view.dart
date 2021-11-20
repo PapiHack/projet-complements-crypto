@@ -97,7 +97,7 @@ class _SignInViewState extends State<SignInView> {
                         return 'Veuillez spécifier un code PIN valide svp !';
                       }
                       if (value.length != 4) {
-                        return 'Le code PIN doit être composé de 4 chiffres';
+                        return 'Le code PIN doit être composé de 4 chiffres !';
                       }
                     },
                     textAlign: TextAlign.justify,
@@ -142,7 +142,7 @@ class _SignInViewState extends State<SignInView> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (isNull(value) || value == '') {
-                        return 'Le code OTP est obligatoire';
+                        return 'Le code OTP est obligatoire !';
                       }
                       if (!isNumeric(value!)) {
                         return 'Veuillez spécifier un code OTP valide svp !';

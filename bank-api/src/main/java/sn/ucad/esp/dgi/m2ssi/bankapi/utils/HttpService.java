@@ -21,12 +21,11 @@ public class HttpService {
 
     public void post(String url, Map<String, Object> data, HttpHeaders headers) {
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(data, headers);
-        ResponseEntity<SMSSenderResponse> response = this.restTemplate.exchange(
+        this.restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 httpEntity,
                 new ParameterizedTypeReference<SMSSenderResponse>() {}
         );
-        // return response.getBody();
     }
 }

@@ -59,7 +59,6 @@ class AuthService {
           'codeOTP': authController.codeOTP.text,
         },
       );
-      print('response = $response');
       return response == null ? false : true;
     } catch (error) {
       return false;

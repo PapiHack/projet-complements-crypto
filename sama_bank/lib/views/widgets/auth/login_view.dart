@@ -49,13 +49,6 @@ class _LoginViewState extends State<LoginView> {
               ),
             );
             this._loginController.phoneNumber.text = '';
-            // if we need to remove previous route in the RouteNavigatorStack instead of
-            // router.navigateTo
-            // Navigator.pushNamedAndRemoveUntil(
-            //   context,
-            //   Routes.HOME,
-            //   (r) => false,
-            // );
           } else {
             Scaffold.of(context).showSnackBar(
               UIHelpers.getSnackbar(

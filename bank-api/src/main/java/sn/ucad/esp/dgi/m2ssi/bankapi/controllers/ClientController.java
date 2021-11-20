@@ -3,7 +3,6 @@ package sn.ucad.esp.dgi.m2ssi.bankapi.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import sn.ucad.esp.dgi.m2ssi.bankapi.dto.LoginDTO;
 import sn.ucad.esp.dgi.m2ssi.bankapi.dto.RegisterDTO;
@@ -18,8 +17,6 @@ import java.util.Optional;
 @Api(value = "CRUD sur les users")
 public class ClientController {
 
-    // @Value("${orange.application-id}")
-    // private String appId;
     private ClientService clientService;
 
     public ClientController(ClientService clientService) {

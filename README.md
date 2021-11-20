@@ -33,6 +33,7 @@ De mani√®re simple, l'application mobile communique avec les services web expos√
 ![screenshot](./screenshots/app.png)
 ![screenshot](./screenshots/app-1.png)
 ![screenshot](./screenshots/app-2.png)
+![screenshot](./screenshots/app-bank.png)
 
 ## Documentation API
 

@@ -165,4 +165,9 @@ public class CodeOTPService {
         }
         return user;
     }
+
+    public void deleteById(Long id) {
+        this.codeOTPRepository.deleteById(id);
+    }
+
 }

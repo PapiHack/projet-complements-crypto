@@ -46,4 +46,10 @@ public class CodeOTPController {
     public Optional<CodeOTP> getCodeById(@PathVariable Long id) {
         return this.codeOTPService.getById(id);
     }
+
+    @DeleteMapping("/codes/{id}")
+    @ApiOperation(value = "Permet de supprimer un code OTP via son ID")
+    public void removeCodeById(@PathVariable Long id) {
+        this.codeOTPService.deleteById(id);
+    }
 }

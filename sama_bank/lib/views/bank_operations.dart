@@ -3,8 +3,45 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'widgets/widgets.dart';
 import '../../../utils/utils.dart';
+import '../../../config/config.dart';
 
 class BankOperationsPage extends StatelessWidget {
+  void _onLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: customRedHatText(
+          'Voulez-vous vraiment vous déconnecter ?',
+          Colors.black,
+          14,
+          FontWeight.normal,
+        ),
+        elevation: 24.0,
+        actions: [
+          customOutlinedButton(
+            'Non',
+            COLOR_BLUE,
+            13,
+            FontWeight.normal,
+            () => Navigator.pop(context),
+          ),
+          customOutlinedButton(
+            'Oui',
+            COLOR_BLUE,
+            13,
+            FontWeight.normal,
+            () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.LOGIN,
+              (r) => false,
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -18,6 +55,19 @@ class BankOperationsPage extends StatelessWidget {
               15.0,
               FontWeight.w700,
             ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(
+                  right: 8,
+                ),
+                child: GestureDetector(
+                  onTap: () => this._onLogout(context),
+                  child: Icon(
+                    Icons.logout_outlined,
+                  ),
+                ),
+              ),
+            ],
           ),
           body: Container(
             color: COLOR_WHITE,
